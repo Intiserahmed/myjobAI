@@ -2,6 +2,7 @@ import subprocess
 import requests
 import json
 import os
+from google import generativeai as genai
 
 # ================
 # Configuration
@@ -14,7 +15,6 @@ if not GEMINI_API_KEY:
 # ================
 # API Call Function
 # ================
-from google import generativeai as genai
 
 def call_gemini_api(job_description: str, current_section: str) -> str:
     """
