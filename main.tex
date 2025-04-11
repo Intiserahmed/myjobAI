@@ -1,0 +1,21 @@
+% main.tex
+\documentclass[12pt]{resume}  % Use your custom class (resume.cls)
+
+% You may add additional packages here if needed
+\usepackage{lipsum} % For dummy text (optional)
+
+\begin{document}
+
+% Header with your name and contact information
+\begin{center}
+    {\Huge \textbf{Your Name}}\\[1ex]
+    Address | Phone | Email | Website
+\end{center}
+\vspace{1em}
+
+% Include resume sections from separate files
+\input{sections/summary.tex}
+\input{sections/experience.tex}
+\input{sections/skills.tex}
+
+\end{document}
