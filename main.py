@@ -6,15 +6,19 @@ import os
 # ================
 # Configuration
 # ================
-GEMINI_API_ENDPOINT = "https://your-gemini-api.endpoint"  # Replace with your actual endpoint
-GEMINI_API_KEY = "YOUR_API_KEY_HERE"  # Replace with your API key if required
+GEMINI_API_KEY = os.environ.get("GEMINI_API_KEY")  # Must be set, otherwise raise error
+
+if not GEMINI_API_KEY:
+    raise EnvironmentError("GEMINI_API_KEY environment variable is not set!")
 
 # ================
 # API Call Function
 # ================
+from google import generativeai as genai
+
 def call_gemini_api(job_description: str, current_section: str) -> str:
     """
-    Call Gemini API to update a LaTeX resume section based on the job description.
+    Call Gemini API (via google.generativeai) to update a LaTeX resume section based on the job description.
     
     Parameters:
         job_description (str): The job description text.
@@ -23,41 +27,35 @@ def call_gemini_api(job_description: str, current_section: str) -> str:
     Returns:
         str: The updated LaTeX content for that section.
     """
-
-    # Construct the prompt for the Gemini API.
-    prompt = (
-        "You are a resume tailoring assistant. Given the following job description and the candidate's "
-        "experience section, rewrite the section to emphasize the candidate's skills and experience relevant "
-        "to the job. Return the text in valid LaTeX format.\n\n"
-        "Job Description:\n"
-        f"{job_description}\n\n"
-        "Current Experience Section:\n"
-        f"{current_section}\n\n"
-        "Rewrite the Experience Section:"
-    )
-
-    # Prepare the request payload
-    payload = {
-        "prompt": prompt,
-        "max_tokens": 500,  # Adjust based on your expected output length
-        # Add any other parameters required by the Gemini API
-    }
-    headers = {
-        "Content-Type": "application/json",
-        "Authorization": f"Bearer {GEMINI_API_KEY}"  # if using bearer token auth
-    }
-
+    # Construct the prompt(s) to send to Gemini.
+    # Using multiple text parts for clarity (similar to your working Gemini code).
+    contents = [
+        {
+            "role": "user",
+            "parts": [
+                {"text": "You are a resume tailoring assistant. Given the following job description and the candidate's experience section, "
+                          "rewrite the section to emphasize the candidate's skills and experience relevant to the job. Return the text in valid LaTeX format."},
+                {"text": "\nJob Description:"},
+                {"text": job_description},
+                {"text": "\nCurrent Experience Section:"},
+                {"text": current_section},
+                {"text": "\nRewrite the Experience Section:"}
+            ]
+        }
+    ]
+    
     try:
-        response = requests.post(GEMINI_API_ENDPOINT, headers=headers, data=json.dumps(payload))
-        response.raise_for_status()
-        updated_text = response.json().get("updated_text")
-        if not updated_text:
-            print("Warning: No updated text found in API response. Using original section.")
-            return current_section
-        return updated_text
-    except requests.exceptions.RequestException as e:
-        print("API call failed:", e)
-        # Fallback: return the original section in case of failure
+        # Configure the Gemini API with your API key.
+        genai.configure(api_key=GEMINI_API_KEY)
+        # Instantiate the model (you can replace "gemini-2.0-flash" with your desired model name)
+        model = genai.GenerativeModel("gemini-2.0-flash")
+        # Generate content using the constructed contents.
+        response = model.generate_content(contents=contents)
+        # Return the generated text.
+        return response.text
+    except Exception as e:
+        print("❌ Error calling Gemini API:", e)
+        # Return the original section as a fallback.
         return current_section
 
 # ================
@@ -83,10 +81,14 @@ def update_section(filepath: str, content: str) -> None:
 # ================
 def compile_resume() -> None:
     """
-    Compile the main LaTeX file into a PDF using latexmk.
+    Clean auxiliary files and compile the main LaTeX file into a PDF using latexmk.
+    This forces a full rebuild so that new changes are always reflected.
     """
     try:
-        subprocess.run(["latexmk", "-pdf", "main.tex"], check=True)
+        # Clean auxiliary files
+        subprocess.run(["latexmk", "-C", "main.tex"], check=True)
+        # Force a full rebuild even if the files are "up-to-date"
+        subprocess.run(["latexmk", "-pdf", "-g", "main.tex"], check=True)
         print("✅ Resume compiled successfully!")
     except subprocess.CalledProcessError as e:
         print("❌ LaTeX compilation failed:", e)
@@ -131,4 +133,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
