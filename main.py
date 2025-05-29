@@ -1,6 +1,5 @@
 import subprocess
 import requests
-import json
 import os
 from google import generativeai as genai
 

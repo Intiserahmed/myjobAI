@@ -1,21 +1,296 @@
-% main.tex
-\documentclass[12pt]{resume}  % Use your custom class (resume.cls)
+\documentclass[10pt,letterpaper]{article} % Standard class, common font sizes
 
-% You may add additional packages here if needed
-\usepackage{lipsum} % For dummy text (optional)
+%--------------------------------------------------------------
+% PACKAGES
+%--------------------------------------------------------------
+\usepackage[utf8]{inputenc} % Input encoding
+\usepackage[T1]{fontenc}    % Font encoding
+% \usepackage{lmodern}      % Using TeX Gyre Pagella instead
+\usepackage{tgpagella}      % Palatino clone - stylish and professional
+\usepackage[margin=0.75in]{geometry} % Margins
+\usepackage{hyperref}       % Clickable links
+\usepackage{needspace}      % Prevent awkward page breaks
+\usepackage{enumitem}       % For custom list spacing if needed
+\usepackage{sectsty}        % To style section headings
+\usepackage{titlesec}       % More control over section titles
+\usepackage{textcomp}       % For symbols like copyright, etc.
+\usepackage{array}          % For the skills section table (simple one)
+\usepackage{fontawesome5}   % For icons like GitHub, LinkedIn (optional, ensure it's installed)
 
+%--------------------------------------------------------------
+% STYLING & FORMATTING (ATS-FRIENDLY)
+%--------------------------------------------------------------
+
+% Hyperlink setup
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue, % Or black for print
+    urlcolor=blue,  % Or black for print
+    pdftitle={Intiser Ahmed - Resume},
+    pdfauthor={Intiser Ahmed},
+    pdfkeywords={Software Engineer, Mobile Developer, AI, iOS, Android, Flutter, Full Stack, Intiser Ahmed} % Add relevant keywords
+}
+
+% Remove page numbers (optional, common for resumes)
+\pagestyle{empty}
+
+% Section heading style
+\titleformat{\section}{\Large\bfseries\raggedright}{}{0em}{}[\titlerule\vspace{0.5ex}]
+\titlespacing*{\section}{0pt}{1.5ex}{1ex} % Adjust spacing around section titles
+
+% Subsection heading style (for job titles, project names etc.)
+\titleformat{\subsection}{\large\bfseries\raggedright}{}{0em}{}
+\titlespacing*{\subsection}{0pt}{1ex}{0.5ex}
+
+% Reduce spacing for itemize environments
+\setlist[itemize]{nosep, leftmargin=*} % Remove vertical spacing in lists, adjust left margin
+
+% Command for contact items
+% Using FontAwesome icons for a more stylish look, with text fallback for ATS
+\newcommand{\contactItem}[2]{\noindent\textbf{#1: }\href{#2}{\texttt{#2}}}
+\newcommand{\contactItemPlain}[2]{\noindent\textbf{#1: }\texttt{#2}}
+\newcommand{\contactLinkFA}[4]{\noindent\faIcon{#1} \href{#2}{\texttt{#3}} (#4) } % Icon, Link, Text, PlainTextForATS
+\newcommand{\contactLink}[3]{\noindent\textbf{#1: }\href{#2}{\texttt{#3}}}
+
+
+% Command for job details (dates, location)
+\newcommand{\jobDetailsLine}[1]{\noindent\textit{#1}\par\vspace{0.5ex}}
+
+% Command for skill categories
+\newcommand{\skillCategory}[1]{\noindent\textbf{#1: }}
+
+%--------------------------------------------------------------
+% YOUR DEFINED COMMANDS (FROM ORIGINAL) - KEPT FOR CONTENT EXTRACTION
+%--------------------------------------------------------------
+\newcommand{\yourName}{Intiser Ahmed}
+\newcommand{\yourWebsiteText}{Portfolio: intiser.space} % Changed for clarity
+\newcommand{\yourWebsiteLink}{https://intiser.space}
+\newcommand{\yourEmail}{intiser4@gmail.com}
+\newcommand{\yourPhone}{+60-1126149106}
+\newcommand{\githubUserName}{intiserahmed}
+\newcommand{\linkedInUserName}{intiser-ahmed}
+
+%--------------------------------------------------------------
 \begin{document}
 
-% Header with your name and contact information
+%--------------------------------------------------------------
+%   PROFILE
+%--------------------------------------------------------------
 \begin{center}
-    {\Huge \textbf{Your Name}}\\[1ex]
-    Address | Phone | Email | Website
+    {\Huge\bfseries \yourName} \\ \vspace{3pt}
+    \contactLink{\faGlobe}{https://intiser.space}{intiser.space} \textbullet{}
+    \contactLink{\faEnvelope}{mailto:\yourEmail}{\yourEmail} \textbullet{}
+    \contactItemPlain{\faMobileAlt}{\yourPhone} \\ \vspace{2pt}
+    \contactLink{\faLinkedin}{https://www.linkedin.com/in/\linkedInUserName}{linkedin.com/in/\linkedInUserName} \textbullet{}
+    \contactLink{\faGithub}{https://github.com/\githubUserName}{github.com/\githubUserName}
 \end{center}
-\vspace{1em}
+\vspace{1ex}
 
-% Include resume sections from separate files
-\input{sections/summary.tex}
-\input{sections/experience.tex}
-\input{sections/skills.tex}
+%--------------------------------------------------------------
+%   SUMMARY / PROFESSIONAL PROFILE (Optional, but good for a quick pitch)
+%--------------------------------------------------------------
+\section*{Professional Profile}
+Senior Mobile Engineer \& AI Innovator with 4+ years of experience delivering impactful results across 4 countries (USA, Singapore, Malaysia, Bangladesh) – both remote and onsite. Specializing in iOS (SwiftUI/UIKit), Flutter, and applied AI to solve real-world challenges in accessibility, healthcare, and industrial automation. Apple WWDC Swift Student Challenge Winner (2021). Proven ability to lead teams, drive community growth (1200\%+), and develop solutions saving millions annually through automation.
+
+%--------------------------------------------------------------
+%   RESEARCH INTERESTS
+%--------------------------------------------------------------
+% \section*{Research Interests} % Combined into Professional Profile for brevity or can be separate
+% AI for healthcare, accessibility, and industrial automation. Interested in multimodal learning, few-shot medical imaging, privacy-preserving LLMs, and NLP for assistive technology.
+
+%--------------------------------------------------------------
+%   EDUCATION
+%--------------------------------------------------------------
+\section{Education}
+\subsection*{International Islamic University Malaysia} % Institution as subsection
+\noindent\textbf{BSc. Honours Computer Science With Software Engineering Specialization} \\
+\jobDetailsLine{Kuala Lumpur, MY \textbullet{} Mar 2024}
+\textbf{CGPA: 3.52}
+
+%--------------------------------------------------------------
+%   SKILLS
+%--------------------------------------------------------------
+\section{Skills}
+\skillCategory{Mobile Development} iOS (Swift, SwiftUI, UIKit, Objective-C, Combine, RxSwift, CoreML, CreateML), Android (Kotlin, Jetpack Compose), Flutter (Dart, BLoC, Riverpod, GetX, Flavors). \\ \vspace{0.5ex}
+\skillCategory{Frontend Web} ReactJS, NextJS, JavaScript, TypeScript, HTML, CSS, Tailwind CSS, Framer Motion. \\ \vspace{0.5ex}
+\skillCategory{Backend} Node.js, Python (Django, FastAPI), Dart (Server-side). \\ \vspace{0.5ex}
+\skillCategory{AI/ML} TensorFlow, PyTorch, Keras, Hugging Face, ONNX, Core ML, On-Device AI (Whisper, Phi-3, Llama-3), Model Quantization, Fine-Tuning. \\ \vspace{0.5ex}
+\skillCategory{Databases} MongoDB, MySQL, PostgreSQL, Firebase, Supabase, Azure SQL DB, SQLite, Hive. \\ \vspace{0.5ex}
+\skillCategory{Cloud | CI/CD | Tools} AWS (Solutions Architect Certified), Docker, Jenkins, Github Actions, Fastlane, Xcode Cloud, TestFlight, App Center, Google Play Console, Jira, Git, Netlify, Vercel, Heroku.
+
+%--------------------------------------------------------------
+%   APP SHOWCASE
+%--------------------------------------------------------------
+\section{App Showcase}
+
+\subsection*{Gazey Talk (iOS, Android - Beta)}
+\noindent Founder & Lead Developer of an innovative assistive eye-tracking communication app, empowering users with speech difficulties. Features advanced AI for gaze detection and predictive text. \\
+\textit{Core Tech: SwiftUI, Jetpack Compose, Kotlin, Swift, On-Device AI. \textbullet{} \href{https://gazeytalk.com/}{gazeytalk.com}}
+\vspace{0.5ex}
+
+\subsection*{AI Medical Transcription (iOS/macOS - Beta)}
+\noindent Secure, on-device AI medical transcription app ensuring patient data privacy by processing audio entirely locally. Designed for healthcare professionals to streamline documentation. \\
+\textit{Core Tech: Swift, SwiftUI, CoreML, On-Device Whisper models.}
+\vspace{0.5ex}
+
+\subsection*{Continental AG - R&D Automation App (Flutter)}
+\noindent Delivered an AI-powered app for tire sidewall recognition and warehouse process automation across 12+ countries, achieving 85\% time savings and millions in annual savings. \\
+\textit{Core Tech: Flutter, AI (Image Recognition), MS SQL, API Integration.}
+\vspace{0.5ex}
+
+\subsection*{Smart Walkie - VoicePing (iOS)}
+\noindent Key contributor to a real-time PTT communication app. Overhauled legacy code, implemented Opus codec for optimal audio, and significantly improved app performance (30\% battery, 20\% crash reduction). \\
+\textit{Core Tech: Swift, Objective-C, SwiftUI, UIKit, Combine, WebRTC. \textbullet{} \href{https://apps.apple.com/my/app/voiceping/id1249953303}{App Store}}
+\vspace{1ex}
+
+%--------------------------------------------------------------
+%   EXPERIENCE
+%--------------------------------------------------------------
+\section{Experience}
+
+\subsection*{Smart Walkie Pte. Ltd.}
+\noindent\textbf{Senior iOS Engineer} \\
+\jobDetailsLine{Singapore (Contract) \textbullet{} May 2024 – Dec 2025 (Expected)}
+% \textit{Links: \href{https://www.smartwalkie.com}{www.smartwalkie.com} \textbullet{} \href{https://apps.apple.com/my/app/voiceping/id1249953303}{VoicePing App Store}} % Link in Showcase
+\begin{itemize}
+    \item Overhauled legacy code infrastructure, transitioning to contemporary libraries and frameworks (SwiftUI, Combine), ensuring long-term stability and support.
+    \item Implemented optimal audio processing using Opus codec and integrated voice processing for real-time communication, enhancing audio quality and efficiency.
+    \item Optimized app performance: Reduced battery consumption by 30\% and crash rate by 20\% through targeted optimizations using Xcode Instruments and Network Conditioner.
+\end{itemize}
+\textit{Technologies used: Swift, Objective-C, SwiftUI, UIKit, Combine, WebRTC, Opus Codec, Xcode Instruments, TestFlight, Network Conditioner.}
+\vspace{1ex}
+
+\subsection*{Gazey Talk}
+\noindent\textbf{Founder \& Lead Mobile App Developer} \\
+\jobDetailsLine{Petaling Jaya, MY \textbullet{} Mar 2024 – Present}
+% \textit{Link: \href{https://gazeytalk.com/}{www.gazeytalk.com}} % Link in Showcase
+\begin{itemize}
+    \item Led the full-cycle development of Gazey Talk, an innovative advanced assistive eye tracking app for communication across iOS (SwiftUI) and Android (Jetpack Compose, Kotlin), currently in beta.
+    \item Architected and implemented on-device AI algorithms for gaze detection and predictive text input, enhancing user experience and accessibility.
+    \item Led a team of developers, ensuring adherence to project timelines, optimizing task allocation, and maintaining high code quality standards through agile methodologies.
+    \item Collaborated extensively with stakeholders, therapists, and potential users to gather comprehensive requirements, define innovative features, and strategically prioritize the product roadmap.
+\end{itemize}
+\textit{Technologies used: SwiftUI, Swift, UIKit, Jetpack Compose, Kotlin, On-Device AI, Next.js (Landing Page), React.js, Fastlane, Jira, App Center, TestFlight.}
+\vspace{1ex}
+
+\subsection*{Continental AG}
+\noindent\textbf{Mobile Application Developer Intern} \\
+\jobDetailsLine{Petaling Jaya, MY \textbullet{} Aug 2023 – Feb 2024}
+% \textit{Link: \href{https://www.continental-tires.com/my/en/}{www.continental-tires.com}} % Implied by Showcase
+\begin{itemize}
+    \item \textbf{Designed, Developed, and Delivered} an R\&D app (Flutter) featuring AI Tire Side Wall Recognition, QR/Barcode scanning, and API integration. \textbf{Automated} warehouse processes across \textbf{12+ countries}, resulting in \textbf{85\%} time savings, \textbf{99\%} human error reduction, and \textbf{millions} saved annually.
+    \item \textbf{Initiated and Developed} an Event App Registrar (Flutter) automating attendee registration with QR codes and NFC tags, registering \textbf{18,000+ attendees} across international events.
+    \item Optimized commercial Flutter SDK with refined code for robust exception handling and bug fixing, achieving a \textbf{30\% reduction} in reported issues.
+\end{itemize}
+\textit{Technologies used: Flutter, BLoC, Dart, Swift (Native Modules), AI (Image Recognition), REST API, SDK Integration, MS SQL, Jenkins, Jira, Appium, App Center, UAT.}
+\vspace{1ex}
+
+\subsection*{Computational Intelligence Research Group, IIUM}
+\noindent\textbf{Trainer} \\
+\jobDetailsLine{Kuala Lumpur, MY \textbullet{} June 2022 – Aug 2023}
+\textit{Link: \href{https://linktr.ee/ciirgiium}{linktr.ee/ciirgiium}}
+\begin{itemize}
+    \item Trained and mentored over 100 students on practical applications of AI (Computer Vision, NLP) and IoT technologies using Python, TensorFlow, and Raspberry Pi.
+    \item Inspired student-led innovations including a hand glove-based sign language recognition system and a smart mirror powered by AI.
+    \item Encouraged interdisciplinary thinking and ethical development aligned with real-world accessibility and automation challenges.
+\end{itemize}
+\vspace{1ex}
+
+\subsection*{ATSIGN}
+\noindent\textbf{Full-Stack Mobile Application Developer} \\
+\jobDetailsLine{San Jose, USA (Remote) \textbullet{} Aug 2021 – Sep 2022}
+\textit{Link: \href{https://www.atsign.com}{www.atsign.com}}
+\begin{itemize}
+    \item Architected and deployed a robust Dart server-side API using Docker, optimizing data security and reducing latency by 35\%, thereby elevating system performance for peer-to-peer applications.
+    \item Revolutionized \textit{SpaceChat} (Flutter) application by developing advanced messaging and group features & implementing automated testing (integration, unit), cutting development time by 60\% and accelerating product release cycles.
+    \item Engineered a MicroPython SDK for Atsign, integrating with Raspberry Pi devices to enhance IoT connectivity and streamline secure device management.
+\end{itemize}
+\textit{Technologies used: Flutter, Dart, Swift (Native Modules), Kotlin (Native Modules), Docker, MicroPython, Raspberry Pi, C++, Jenkins, App Store Connect, Google Play Console, Test-Driven Development.}
+\vspace{1ex}
+
+\subsection*{ATSIGN}
+\noindent\textbf{Full-Stack Developer Intern} \\
+\jobDetailsLine{San Jose, USA (Remote) \textbullet{} May 2021 – July 2021}
+\begin{itemize}
+    \item Developed official developer site using React and Next.js, following Agile sprint cycles to enhance user experience and increase developer engagement by 75\%.
+    \item Collaborated in the development and execution of comprehensive testing protocols for a secure Full-stack Flutter App, integrating Atsign SDK.
+\end{itemize}
+\textit{Technologies used: Flutter, Kotlin, JavaScript, ReactJS, SCSS, Tailwind CSS, NextJS, Github Actions.}
+\vspace{1ex}
+
+\subsection*{ATSIGN}
+\noindent\textbf{Technical Support Engineer} \\
+\jobDetailsLine{San Jose, USA (Remote) \textbullet{} Dec 2020 – April 2021}
+\begin{itemize}
+    \item Spearheaded the development and demonstration of full-stack Demo Apps (Flutter), facilitating experiential learning for developers and propelling the successful deployment of multiple apps on the App Store.
+    \item Elevated developer engagement by 30\% through comprehensive documentation, tutorials, and insightful articles on Atsign SDK architecture, catalyzing community growth.
+    \item Optimized 8 global live events and hackathons, providing real-time technical troubleshooting and enhancing participant engagement.
+\end{itemize}
+\textit{Technologies used: Technical Writing, Documentation, Flutter, Atsign SDK, Docker, App Store Connect.}
+\vspace{1ex}
+
+
+%--------------------------------------------------------------
+%   PERSONAL PROJECTS
+%--------------------------------------------------------------
+\section{Personal Projects}
+
+\subsection*{ZapShorts (Ongoing)}
+\noindent AI-powered video clipping tool to transform long-form videos into viral-ready short clips. Features AI Clipping, Animated Captions, B-Roll integration, Virality Score, platform-specific exports (TikTok, YouTube Shorts), social media scheduling, and brand template customization (logos, intros/outros). \\
+\textit{Technologies: Python (Backend), AI (Video Analysis, NLP), Next.js (Frontend), Cloud Services.}
+\vspace{0.5ex}
+
+% AI Medical Transcription App & macOS File Organization App are now in App Showcase
+% \subsection*{AI Medical Transcription App (iOS/macOS, TestFlight Beta)} ...
+% \subsection*{macOS File Organization App (TestFlight Beta)} ...
+
+\subsection*{Spectreora (2023)}
+\noindent Portable, non-mobile reliant IoT ecosystem for continuous cardiac monitoring and real-time stroke prediction. \href{https://github.com/Intiserahmed/SpectreOra-IoT-Mobile-ML}{\faGithubSquare~GitHub Link} \\
+\textit{Technologies: Micropython, C++, Flutter, Riverpod, AWS, Python, FastAPI, PostgreSQL, Supabase, Firebase.}
+\vspace{0.5ex}
+
+\subsection*{Sacred Fort (2021)}
+\noindent Robust Password Manager App enabling secure storage, update, sharing, and autofill of passwords for websites and apps. \href{https://github.com/Intiserahmed/Password-Manager-Atsign}{\faGithubSquare~GitHub Link} \\
+\textit{Technologies: Flutter, Kotlin (Autofill), Atsign SDK, Getx, Hive.}
+\vspace{0.5ex}
+
+\subsection*{Portfolio Site (intiserahmed.online)}
+\noindent Personal portfolio website to showcase projects and skills. \href{https://intiserahmed.online/}{\faGlobe~Link} \\
+\textit{Technologies: NextJS, ReactJS, TypeScript, Tailwind CSS, Vercel, Vite.}
+\vspace{1ex}
+
+\noindent\textbf{\textit{More Projects on \href{https://github.com/intiserahmed}{\faGithubSquare~GitHub: github.com/intiserahmed}}}
+
+%--------------------------------------------------------------
+%   RECOGNITION, AWARDS & CERTIFICATIONS
+%--------------------------------------------------------------
+\section{Recognition & Leadership}
+\begin{itemize}
+    \item \textbf{GDSC Lead, Google Developer Student Club IIUM (2021-2022):} Led and managed a team of 21 to organize events and hackathons, fostering innovation and community engagement. Grew club membership by 1233\%.
+    \item \textbf{Mentor:} Stanford University's TreeHacks (2021); Princeton University's HackPrinceton (2021 - Mentor & Judge); UC Berkeley's CalHack (2021).
+    \item \textbf{Streamlit Student Ambassador.}
+\end{itemize}
+
+\subsection*{Awards}
+\begin{itemize}
+    \item \textbf{Apple WWDC Swift Student Challenge Winner (2021)}
+    \item IIUM Dean's Award (2020 - 2024)
+    \item Silver, Final Year Project, IIUM (2023)
+\end{itemize}
+
+\subsection*{Certifications}
+\begin{itemize}
+    \item AWS Cloud Solutions Architect (2023)
+    \item Deloitte Australia Technology Virtual Experience Program (2023)
+    \item MongoDB for SQL Experts (2023)
+    \item Postman API Student Expert (2023)
+    \item Cisco CyberOps Associate (2021)
+\end{itemize}
+
+%--------------------------------------------------------------
+%   REFERENCES
+%--------------------------------------------------------------
+\section*{References} % Unnumbered section
+Available upon request. Testimonials viewable on LinkedIn: \href{https://www.linkedin.com/in/intiser-ahmed/details/recommendations/}{\faLinkedin~linkedin.com/in/\linkedInUserName/details/recommendations/}
 
 \end{document}
